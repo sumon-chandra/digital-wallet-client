@@ -41,7 +41,7 @@ export function Navigation() {
 						<Button variant="ghost" asChild>
 							<Link to="/login">Sign In</Link>
 						</Button>
-						<Button asChild>
+						<Button asChild className="bg-secondary/90 hover:bg-secondary">
 							<Link to="/signup">Get Started</Link>
 						</Button>
 					</div>

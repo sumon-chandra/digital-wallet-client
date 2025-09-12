@@ -8,24 +8,33 @@ import { PasswordInput } from "../ui/password-input";
 import FormInput from "./form-input";
 import SubmitButton from "./submit-button";
 import { Switch } from "../ui/switch";
+import { useSignupMutation } from "@/services/users";
+import { type IUser } from "@/interfaces/users";
 
 const signupFormSchema = z.object({
 	name: z.string().min(1),
 	email: z.string(),
-	address: z.string().min(1).optional(),
+	address: z.string().optional(),
 	password: z.string(),
 	agent: z.boolean().optional(),
 });
 
 export default function SignupForm() {
+	const [signup, { isLoading, data, error }] = useSignupMutation();
+	// eslint-disable-next-line no-console
+	console.log({ formResponse: data, error });
 	const form = useForm<z.infer<typeof signupFormSchema>>({
 		resolver: zodResolver(signupFormSchema),
 	});
 
 	function onSubmit(values: z.infer<typeof signupFormSchema>) {
 		try {
-			// eslint-disable-next-line no-console
-			console.log(values);
+			const { agent, ...restValues } = values;
+			const userPayload: Partial<IUser> = {
+				...restValues,
+				role: agent ? "AGENT" : "USER",
+			};
+			signup(userPayload);
 			toast(
 				<pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
 					<code className="text-white">{JSON.stringify(values, null, 2)}</code>
@@ -88,7 +97,7 @@ export default function SignupForm() {
 						</FormInput>
 					)}
 				/>
-				<SubmitButton label="Signup" />
+				<SubmitButton label="Signup" loading={isLoading} />
 			</form>
 		</Form>
 	);

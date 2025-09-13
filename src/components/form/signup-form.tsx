@@ -8,8 +8,9 @@ import { PasswordInput } from "../ui/password-input";
 import FormInput from "./form-input";
 import SubmitButton from "./submit-button";
 import { Switch } from "../ui/switch";
-import { useSignupMutation } from "@/services/users";
+import { useSignupMutation } from "@/redux/services/users";
 import { type IUser } from "@/interfaces/users";
+import type { CustomBaseQueryError } from "@/redux/base-api";
 
 const signupFormSchema = z.object({
 	name: z.string().min(1),
@@ -20,9 +21,16 @@ const signupFormSchema = z.object({
 });
 
 export default function SignupForm() {
-	const [signup, { isLoading, data, error }] = useSignupMutation();
-	// eslint-disable-next-line no-console
-	console.log({ formResponse: data, error });
+	const [signup, { isLoading, error, isSuccess, data }] = useSignupMutation();
+	const errorRes = error as CustomBaseQueryError;
+
+	if (errorRes?.data?.errorSources) {
+		errorRes.data.errorSources.forEach((error) => toast.error(error.message));
+	}
+	if (isSuccess) {
+		toast.success(data?.message);
+	}
+
 	const form = useForm<z.infer<typeof signupFormSchema>>({
 		resolver: zodResolver(signupFormSchema),
 	});
@@ -35,11 +43,6 @@ export default function SignupForm() {
 				role: agent ? "AGENT" : "USER",
 			};
 			signup(userPayload);
-			toast(
-				<pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-					<code className="text-white">{JSON.stringify(values, null, 2)}</code>
-				</pre>
-			);
 		} catch (error) {
 			console.error("Form submission error", error);
 			toast.error("Failed to submit the form. Please try again.");

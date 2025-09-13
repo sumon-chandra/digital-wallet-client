@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "../ui/password-input";
 import FormInput from "./form-input";
 import SubmitButton from "./submit-button";
+import { useLoginMutation } from "@/redux/services/auth";
+import type { CustomBaseQueryError } from "@/redux/base-api";
 
 const loginFormSchema = z.object({
 	email: z.string().email(),
@@ -14,19 +16,23 @@ const loginFormSchema = z.object({
 });
 
 export default function LoginForm() {
+	const [login, { isLoading, error, isError, data, isSuccess }] = useLoginMutation();
+	const errorRes = error as CustomBaseQueryError;
+
+	if (isError) {
+		toast.error(errorRes.data?.message);
+	}
+	if (isSuccess) {
+		toast.success(data?.message);
+	}
+
 	const form = useForm<z.infer<typeof loginFormSchema>>({
 		resolver: zodResolver(loginFormSchema),
 	});
 
 	function onSubmit(values: z.infer<typeof loginFormSchema>) {
 		try {
-			// eslint-disable-next-line no-console
-			console.log(values);
-			toast(
-				<pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-					<code className="text-white">{JSON.stringify(values, null, 2)}</code>
-				</pre>
-			);
+			login(values);
 		} catch (error) {
 			console.error("Form submission error", error);
 			toast.error("Failed to submit the form. Please try again.");
@@ -55,7 +61,7 @@ export default function LoginForm() {
 						</FormInput>
 					)}
 				/>
-				<SubmitButton label="Login" />
+				<SubmitButton label="Login" loading={isLoading} />
 			</form>
 		</Form>
 	);

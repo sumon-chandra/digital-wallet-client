@@ -6,6 +6,8 @@ import { Link } from "@tanstack/react-router";
 export function Navigation() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+	const isLoggedIn = false;
+
 	const navItems = [
 		{ to: "/", label: "Home", icon: Wallet },
 		{ to: "/about", label: "About", icon: Users },
@@ -38,12 +40,20 @@ export function Navigation() {
 
 					{/* CTA Buttons */}
 					<div className="hidden md:flex items-center space-x-4">
-						<Button variant="ghost" asChild>
-							<Link to="/login">Sign In</Link>
-						</Button>
-						<Button asChild className="bg-secondary/90 hover:bg-secondary">
-							<Link to="/signup">Get Started</Link>
-						</Button>
+						{isLoggedIn ? (
+							<Button asChild className="bg-secondary/90 hover:bg-secondary">
+								<Link to="..">Dashboard</Link>
+							</Button>
+						) : (
+							<>
+								<Button variant="ghost" asChild>
+									<Link to="/login">Sign In</Link>
+								</Button>
+								<Button asChild className="bg-secondary/90 hover:bg-secondary">
+									<Link to="/signup">Get Started</Link>
+								</Button>
+							</>
+						)}
 					</div>
 
 					{/* Mobile Menu Button */}
@@ -71,12 +81,20 @@ export function Navigation() {
 								);
 							})}
 							<div className="flex flex-col space-y-2 pt-4 border-t border-border">
-								<Button variant="ghost" asChild>
-									<Link to="/login">Sign In</Link>
-								</Button>
-								<Button asChild>
-									<Link to="/signup">Get Started</Link>
-								</Button>
+								{isLoggedIn ? (
+									<Button asChild className="bg-secondary/90 hover:bg-secondary">
+										<Link to="..">Dashboard</Link>
+									</Button>
+								) : (
+									<>
+										<Button variant="ghost" asChild>
+											<Link to="/login">Sign In</Link>
+										</Button>
+										<Button asChild className="bg-secondary/90 hover:bg-secondary">
+											<Link to="/signup">Get Started</Link>
+										</Button>
+									</>
+								)}
 							</div>
 						</div>
 					</div>

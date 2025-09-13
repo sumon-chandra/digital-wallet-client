@@ -8,7 +8,9 @@ export const baseApi = createApi({
 	reducerPath: "baseApi",
 	baseQuery: fetchBaseQuery({
 		baseUrl: BACKEND_BASE_URL,
+		// prepareHeaders: Headers as ,
 		credentials: "include",
+		mode: "cors",
 	}) as BaseQueryFn<string | FetchArgs, unknown, CustomBaseQueryError>,
 	tagTypes: ["AUTH", "USERS", "WALLET", "TRANSACTION"],
 	endpoints: () => ({}),

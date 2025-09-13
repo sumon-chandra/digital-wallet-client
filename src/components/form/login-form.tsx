@@ -30,9 +30,11 @@ export default function LoginForm() {
 		resolver: zodResolver(loginFormSchema),
 	});
 
-	function onSubmit(values: z.infer<typeof loginFormSchema>) {
+	async function onSubmit(values: z.infer<typeof loginFormSchema>) {
 		try {
-			login(values);
+			const response = await login(values);
+			// eslint-disable-next-line no-console
+			console.log({ response });
 		} catch (error) {
 			console.error("Form submission error", error);
 			toast.error("Failed to submit the form. Please try again.");

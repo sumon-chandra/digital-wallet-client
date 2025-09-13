@@ -8,7 +8,7 @@ import { PasswordInput } from "../ui/password-input";
 import FormInput from "./form-input";
 import SubmitButton from "./submit-button";
 import { Switch } from "../ui/switch";
-import { useSignupMutation } from "@/redux/services/users";
+import { useSignupMutation } from "@/redux/api/users";
 import { type IUser } from "@/interfaces/users";
 import type { CustomBaseQueryError } from "@/redux/base-api";
 

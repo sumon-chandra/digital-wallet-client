@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Wallet, Shield, CreditCard, Users, HelpCircle, Phone } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { useAuth } from "@/hooks/useAuth";
 
 export function Navigation() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-	const isLoggedIn = false;
+	const { isLoggedIn } = useAuth();
 
 	const navItems = [
 		{ to: "/", label: "Home", icon: Wallet },

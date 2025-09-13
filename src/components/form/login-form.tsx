@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { PasswordInput } from "../ui/password-input";
 import FormInput from "./form-input";
 import SubmitButton from "./submit-button";
-import { useLoginMutation } from "@/redux/services/auth";
+import { useLoginMutation } from "@/redux/api/auth";
 import type { CustomBaseQueryError } from "@/redux/base-api";
 
 const loginFormSchema = z.object({

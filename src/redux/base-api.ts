@@ -10,7 +10,7 @@ export const baseApi = createApi({
 		baseUrl: BACKEND_BASE_URL,
 		// prepareHeaders: Headers as ,
 		credentials: "include",
-		mode: "cors",
+		// mode: "cors",
 	}) as BaseQueryFn<string | FetchArgs, unknown, CustomBaseQueryError>,
 	tagTypes: ["AUTH", "USERS", "WALLET", "TRANSACTION"],
 	endpoints: () => ({}),

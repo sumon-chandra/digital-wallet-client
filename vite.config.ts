@@ -19,4 +19,13 @@ export default defineConfig({
 			"@": path.resolve(__dirname, "./src"),
 		},
 	},
+	server: {
+		proxy: {
+			"/api": {
+				target: "https://deg-wallet-api.vercel.app",
+				changeOrigin: true,
+				secure: true,
+			},
+		},
+	},
 });

@@ -4,12 +4,12 @@ import type { RootState } from "../store";
 
 type TAuthState = {
 	user: null | IUser;
-	accessToken: null | string;
+	token: null | string;
 };
 
 const initialState: TAuthState = {
 	user: null,
-	accessToken: null,
+	token: null,
 };
 
 const authSlice = createSlice({
@@ -17,13 +17,13 @@ const authSlice = createSlice({
 	initialState,
 	reducers: {
 		setUser: (state, action) => {
-			const { user, accessToken } = action.payload;
+			const { user, token } = action.payload;
 			state.user = user;
-			state.accessToken = accessToken;
+			state.token = token;
 		},
 		logout: (state) => {
 			state.user = null;
-			state.accessToken = null;
+			state.token = null;
 		},
 	},
 });
@@ -32,5 +32,5 @@ export const { setUser, logout } = authSlice.actions;
 
 export default authSlice.reducer;
 
-export const useCurrentAccessToken = (state: RootState) => state.auth.accessToken;
+export const useCurrentToken = (state: RootState) => state.auth.token;
 export const selectCurrentUser = (state: RootState) => state.auth.user;

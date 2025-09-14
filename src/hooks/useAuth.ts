@@ -1,4 +1,4 @@
-import { useCurrentAccessToken } from "@/redux/features/auth-slice";
+import { useCurrentToken } from "@/redux/features/auth-slice";
 import { useAppSelector } from "@/redux/hook";
 import { verifyToken } from "@/utils/verify-token";
 
@@ -9,7 +9,7 @@ interface JWTPayload {
 }
 
 export const useAuth = () => {
-	const token = useAppSelector(useCurrentAccessToken);
+	const token = useAppSelector(useCurrentToken);
 
 	if (!token) {
 		return {

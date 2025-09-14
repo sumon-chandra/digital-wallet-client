@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Wallet, Shield, CreditCard, Users, HelpCircle, Phone } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
 
 export function Navigation() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const { isLoggedIn } = useAuth();
+	const navigate = useNavigate();
+
+	if (isLoggedIn) {
+		navigate({ to: "/pricing" });
+	}
 
 	const navItems = [
 		{ to: "/", label: "Home", icon: Wallet },
@@ -42,7 +47,7 @@ export function Navigation() {
 					<div className="hidden md:flex items-center space-x-4">
 						{isLoggedIn ? (
 							<Button asChild className="bg-secondary/90 hover:bg-secondary">
-								<Link to="..">Dashboard</Link>
+								<Link to="/dashboard">Dashboard</Link>
 							</Button>
 						) : (
 							<>

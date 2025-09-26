@@ -3,15 +3,22 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Wallet, Shield, CreditCard, Users, HelpCircle, Phone } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
+import { useLogoutMutation } from "@/redux/api/auth";
 
 export function Navigation() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const { isLoggedIn } = useAuth();
+	const [logout] = useLogoutMutation();
 	const navigate = useNavigate();
 
 	if (isLoggedIn) {
 		navigate({ to: "/pricing" });
 	}
+
+	const handleLogout = () => {
+		logout(null);
+		navigate({ to: "/login" });
+	};
 
 	const navItems = [
 		{ to: "/", label: "Home", icon: Wallet },
@@ -46,9 +53,14 @@ export function Navigation() {
 					{/* CTA Buttons */}
 					<div className="hidden md:flex items-center space-x-4">
 						{isLoggedIn ? (
-							<Button asChild className="bg-secondary/90 hover:bg-secondary">
-								<Link to="/dashboard">Dashboard</Link>
-							</Button>
+							<div>
+								<Button asChild className="bg-secondary/90 hover:bg-secondary">
+									<Link to="/dashboard">Dashboard Page</Link>
+								</Button>
+								<Button onClick={handleLogout} className="bg-secondary/90 hover:bg-secondary">
+									Logout
+								</Button>
+							</div>
 						) : (
 							<>
 								<Button variant="ghost" asChild>
@@ -87,9 +99,14 @@ export function Navigation() {
 							})}
 							<div className="flex flex-col space-y-2 pt-4 border-t border-border">
 								{isLoggedIn ? (
-									<Button asChild className="bg-secondary/90 hover:bg-secondary">
-										<Link to="..">Dashboard</Link>
-									</Button>
+									<>
+										<Button asChild className="bg-secondary/90 hover:bg-secondary">
+											<Link to="..">Dashboard</Link>
+										</Button>
+										<Button onClick={handleLogout} asChild className="bg-secondary/90 hover:bg-secondary">
+											Logout
+										</Button>
+									</>
 								) : (
 									<>
 										<Button variant="ghost" asChild>

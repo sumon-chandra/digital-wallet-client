@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Wallet, Shield, CreditCard, Users, HelpCircle, Phone } from "lucide-react";
+import { Menu, X, Wallet } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
 import { useLogoutMutation } from "@/redux/api/auth";
+import { navItems } from "@/constants/nav-items";
 
 export function Navigation() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,23 +12,16 @@ export function Navigation() {
 	const [logout] = useLogoutMutation();
 	const navigate = useNavigate();
 
-	if (isLoggedIn) {
-		navigate({ to: "/pricing" });
-	}
+	useEffect(() => {
+		if (isLoggedIn) {
+			navigate({ to: "/pricing", resetScroll: true });
+		}
+	}, [isLoggedIn, navigate]);
 
 	const handleLogout = () => {
 		logout(null);
 		navigate({ to: "/login" });
 	};
-
-	const navItems = [
-		{ to: "/", label: "Home", icon: Wallet },
-		{ to: "/about", label: "About", icon: Users },
-		{ to: "/features", label: "Features", icon: Shield },
-		{ to: "/pricing", label: "Pricing", icon: CreditCard },
-		{ to: "/contact", label: "Contact", icon: Phone },
-		{ to: "/faq", label: "FAQ", icon: HelpCircle },
-	];
 
 	return (
 		<nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">

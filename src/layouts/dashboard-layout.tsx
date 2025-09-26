@@ -1,4 +1,3 @@
-import { Outlet } from "@tanstack/react-router";
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
@@ -6,7 +5,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbP
 import { useAuth } from "@/hooks/useAuth";
 import { getDashboardBreadcrumbs } from "@/utils/get-dashboard-breadcrumbs";
 
-export function DashboardLayout() {
+export function DashboardLayout({ children }: { children?: React.ReactNode }) {
 	const { user } = useAuth();
 	if (!user) {
 		// eslint-disable-next-line no-console
@@ -43,9 +42,7 @@ export function DashboardLayout() {
 						)}
 					</div>
 				</header>
-				<div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-					<Outlet />
-				</div>
+				<div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>
 			</SidebarInset>
 		</SidebarProvider>
 	);

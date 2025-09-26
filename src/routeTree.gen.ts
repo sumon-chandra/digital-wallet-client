@@ -8,13 +8,11 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
-
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as _mainRouteImport } from './routes/__main'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as _mainIndexRouteImport } from './routes/__main.index'
-import { Route as Dashboard_layoutRouteImport } from './routes/dashboard/__layout'
+import { Route as DashboardUnauthorizedRouteImport } from './routes/dashboard/unauthorized'
 import { Route as _mainSignupRouteImport } from './routes/__main.signup'
 import { Route as _mainPricingRouteImport } from './routes/__main.pricing'
 import { Route as _mainLoginRouteImport } from './routes/__main.login'
@@ -22,30 +20,24 @@ import { Route as _mainFaqRouteImport } from './routes/__main.faq'
 import { Route as _mainContactRouteImport } from './routes/__main.contact'
 import { Route as _mainAboutRouteImport } from './routes/__main.about'
 
-const DashboardRouteImport = createFileRoute('/dashboard')()
-
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const _mainRoute = _mainRouteImport.update({
   id: '/__main',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => DashboardRoute,
+  id: '/dashboard/',
+  path: '/dashboard/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const _mainIndexRoute = _mainIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => _mainRoute,
 } as any)
-const Dashboard_layoutRoute = Dashboard_layoutRouteImport.update({
-  id: '/__layout',
-  getParentRoute: () => DashboardRoute,
+const DashboardUnauthorizedRoute = DashboardUnauthorizedRouteImport.update({
+  id: '/dashboard/unauthorized',
+  path: '/dashboard/unauthorized',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const _mainSignupRoute = _mainSignupRouteImport.update({
   id: '/signup',
@@ -85,9 +77,9 @@ export interface FileRoutesByFullPath {
   '/login': typeof _mainLoginRoute
   '/pricing': typeof _mainPricingRoute
   '/signup': typeof _mainSignupRoute
-  '/dashboard': typeof Dashboard_layoutRoute
+  '/dashboard/unauthorized': typeof DashboardUnauthorizedRoute
   '/': typeof _mainIndexRoute
-  '/dashboard/': typeof DashboardIndexRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/about': typeof _mainAboutRoute
@@ -96,8 +88,9 @@ export interface FileRoutesByTo {
   '/login': typeof _mainLoginRoute
   '/pricing': typeof _mainPricingRoute
   '/signup': typeof _mainSignupRoute
-  '/dashboard': typeof DashboardIndexRoute
+  '/dashboard/unauthorized': typeof DashboardUnauthorizedRoute
   '/': typeof _mainIndexRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -108,8 +101,7 @@ export interface FileRoutesById {
   '/__main/login': typeof _mainLoginRoute
   '/__main/pricing': typeof _mainPricingRoute
   '/__main/signup': typeof _mainSignupRoute
-  '/dashboard': typeof DashboardRouteWithChildren
-  '/dashboard/__layout': typeof Dashboard_layoutRoute
+  '/dashboard/unauthorized': typeof DashboardUnauthorizedRoute
   '/__main/': typeof _mainIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
 }
@@ -122,9 +114,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/pricing'
     | '/signup'
-    | '/dashboard'
+    | '/dashboard/unauthorized'
     | '/'
-    | '/dashboard/'
+    | '/dashboard'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/about'
@@ -133,8 +125,9 @@ export interface FileRouteTypes {
     | '/login'
     | '/pricing'
     | '/signup'
-    | '/dashboard'
+    | '/dashboard/unauthorized'
     | '/'
+    | '/dashboard'
   id:
     | '__root__'
     | '/__main'
@@ -144,26 +137,19 @@ export interface FileRouteTypes {
     | '/__main/login'
     | '/__main/pricing'
     | '/__main/signup'
-    | '/dashboard'
-    | '/dashboard/__layout'
+    | '/dashboard/unauthorized'
     | '/__main/'
     | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   _mainRoute: typeof _mainRouteWithChildren
-  DashboardRoute: typeof DashboardRouteWithChildren
+  DashboardUnauthorizedRoute: typeof DashboardUnauthorizedRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/__main': {
       id: '/__main'
       path: ''
@@ -173,10 +159,10 @@ declare module '@tanstack/react-router' {
     }
     '/dashboard/': {
       id: '/dashboard/'
-      path: '/'
-      fullPath: '/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      parentRoute: typeof rootRouteImport
     }
     '/__main/': {
       id: '/__main/'
@@ -185,12 +171,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof _mainIndexRouteImport
       parentRoute: typeof _mainRoute
     }
-    '/dashboard/__layout': {
-      id: '/dashboard/__layout'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof Dashboard_layoutRouteImport
-      parentRoute: typeof DashboardRoute
+    '/dashboard/unauthorized': {
+      id: '/dashboard/unauthorized'
+      path: '/dashboard/unauthorized'
+      fullPath: '/dashboard/unauthorized'
+      preLoaderRoute: typeof DashboardUnauthorizedRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/__main/signup': {
       id: '/__main/signup'
@@ -259,23 +245,10 @@ const _mainRouteChildren: _mainRouteChildren = {
 
 const _mainRouteWithChildren = _mainRoute._addFileChildren(_mainRouteChildren)
 
-interface DashboardRouteChildren {
-  Dashboard_layoutRoute: typeof Dashboard_layoutRoute
-  DashboardIndexRoute: typeof DashboardIndexRoute
-}
-
-const DashboardRouteChildren: DashboardRouteChildren = {
-  Dashboard_layoutRoute: Dashboard_layoutRoute,
-  DashboardIndexRoute: DashboardIndexRoute,
-}
-
-const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
-  DashboardRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   _mainRoute: _mainRouteWithChildren,
-  DashboardRoute: DashboardRouteWithChildren,
+  DashboardUnauthorizedRoute: DashboardUnauthorizedRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

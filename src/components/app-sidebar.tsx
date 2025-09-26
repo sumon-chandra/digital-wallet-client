@@ -17,7 +17,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { adminNavigation, agentNavigation, userNavigation } from "@/constants/navigation";
 import { useLogoutMutation } from "@/redux/api/auth";
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
@@ -80,15 +80,17 @@ export function AppSidebar({ userRole, userName = "John Doe", userEmail = "john@
 	return (
 		<Sidebar collapsible="icon" {...props}>
 			<SidebarHeader>
-				<div className="flex items-center gap-2 px-4 py-2">
-					<div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-						<Wallet className="size-4" />
+				<Link to="/">
+					<div className="flex items-center gap-2 px-4 py-2">
+						<div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+							<Wallet className="size-4" />
+						</div>
+						<div className="grid flex-1 text-left text-sm leading-tight">
+							<span className="truncate font-semibold">PayWallet</span>
+							<span className="truncate text-xs text-sidebar-foreground/70">{getRoleTitle()}</span>
+						</div>
 					</div>
-					<div className="grid flex-1 text-left text-sm leading-tight">
-						<span className="truncate font-semibold">FinanceApp</span>
-						<span className="truncate text-xs text-sidebar-foreground/70">{getRoleTitle()}</span>
-					</div>
-				</div>
+				</Link>
 			</SidebarHeader>
 			<SidebarContent>
 				<SidebarGroup>

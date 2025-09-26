@@ -1,27 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Wallet } from "lucide-react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
-import { useLogoutMutation } from "@/redux/api/auth";
 import { navItems } from "@/constants/nav-items";
 
 export function Navigation() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const { isLoggedIn } = useAuth();
-	const [logout] = useLogoutMutation();
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		if (isLoggedIn) {
-			navigate({ to: "/pricing", resetScroll: true });
-		}
-	}, [isLoggedIn, navigate]);
-
-	const handleLogout = () => {
-		logout(null);
-		navigate({ to: "/login" });
-	};
 
 	return (
 		<nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
@@ -47,14 +33,9 @@ export function Navigation() {
 					{/* CTA Buttons */}
 					<div className="hidden md:flex items-center space-x-4">
 						{isLoggedIn ? (
-							<div>
-								<Button asChild className="bg-secondary/90 hover:bg-secondary">
-									<Link to="/dashboard">Dashboard Page</Link>
-								</Button>
-								<Button onClick={handleLogout} className="bg-secondary/90 hover:bg-secondary">
-									Logout
-								</Button>
-							</div>
+							<Button asChild className="bg-secondary/90 hover:bg-secondary">
+								<Link to="/dashboard">Dashboard</Link>
+							</Button>
 						) : (
 							<>
 								<Button variant="ghost" asChild>
@@ -93,14 +74,9 @@ export function Navigation() {
 							})}
 							<div className="flex flex-col space-y-2 pt-4 border-t border-border">
 								{isLoggedIn ? (
-									<>
-										<Button asChild className="bg-secondary/90 hover:bg-secondary">
-											<Link to="..">Dashboard</Link>
-										</Button>
-										<Button onClick={handleLogout} asChild className="bg-secondary/90 hover:bg-secondary">
-											Logout
-										</Button>
-									</>
+									<Button asChild className="bg-secondary/90 hover:bg-secondary">
+										<Link to="..">Dashboard</Link>
+									</Button>
 								) : (
 									<>
 										<Button variant="ghost" asChild>

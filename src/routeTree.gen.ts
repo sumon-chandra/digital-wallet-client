@@ -8,92 +8,114 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as SignupRouteImport } from './routes/signup'
-import { Route as PricingRouteImport } from './routes/pricing'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as FaqRouteImport } from './routes/faq'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { createFileRoute } from '@tanstack/react-router'
 
-const SignupRoute = SignupRouteImport.update({
-  id: '/signup',
-  path: '/signup',
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as _mainRouteImport } from './routes/__main'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as _mainIndexRouteImport } from './routes/__main.index'
+import { Route as Dashboard_layoutRouteImport } from './routes/dashboard/__layout'
+import { Route as _mainSignupRouteImport } from './routes/__main.signup'
+import { Route as _mainPricingRouteImport } from './routes/__main.pricing'
+import { Route as _mainLoginRouteImport } from './routes/__main.login'
+import { Route as _mainFaqRouteImport } from './routes/__main.faq'
+import { Route as _mainContactRouteImport } from './routes/__main.contact'
+import { Route as _mainAboutRouteImport } from './routes/__main.about'
+
+const DashboardRouteImport = createFileRoute('/dashboard')()
+
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PricingRoute = PricingRouteImport.update({
-  id: '/pricing',
-  path: '/pricing',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FaqRoute = FaqRouteImport.update({
-  id: '/faq',
-  path: '/faq',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const _mainRoute = _mainRouteImport.update({
+  id: '/__main',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
-  id: '/dashboard/',
-  path: '/dashboard/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const _mainIndexRoute = _mainIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => _mainRoute,
+} as any)
+const Dashboard_layoutRoute = Dashboard_layoutRouteImport.update({
+  id: '/__layout',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const _mainSignupRoute = _mainSignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => _mainRoute,
+} as any)
+const _mainPricingRoute = _mainPricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => _mainRoute,
+} as any)
+const _mainLoginRoute = _mainLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => _mainRoute,
+} as any)
+const _mainFaqRoute = _mainFaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => _mainRoute,
+} as any)
+const _mainContactRoute = _mainContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => _mainRoute,
+} as any)
+const _mainAboutRoute = _mainAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => _mainRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/contact': typeof ContactRoute
-  '/faq': typeof FaqRoute
-  '/login': typeof LoginRoute
-  '/pricing': typeof PricingRoute
-  '/signup': typeof SignupRoute
-  '/dashboard': typeof DashboardIndexRoute
+  '/about': typeof _mainAboutRoute
+  '/contact': typeof _mainContactRoute
+  '/faq': typeof _mainFaqRoute
+  '/login': typeof _mainLoginRoute
+  '/pricing': typeof _mainPricingRoute
+  '/signup': typeof _mainSignupRoute
+  '/dashboard': typeof Dashboard_layoutRoute
+  '/': typeof _mainIndexRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/contact': typeof ContactRoute
-  '/faq': typeof FaqRoute
-  '/login': typeof LoginRoute
-  '/pricing': typeof PricingRoute
-  '/signup': typeof SignupRoute
+  '/about': typeof _mainAboutRoute
+  '/contact': typeof _mainContactRoute
+  '/faq': typeof _mainFaqRoute
+  '/login': typeof _mainLoginRoute
+  '/pricing': typeof _mainPricingRoute
+  '/signup': typeof _mainSignupRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/': typeof _mainIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/contact': typeof ContactRoute
-  '/faq': typeof FaqRoute
-  '/login': typeof LoginRoute
-  '/pricing': typeof PricingRoute
-  '/signup': typeof SignupRoute
+  '/__main': typeof _mainRouteWithChildren
+  '/__main/about': typeof _mainAboutRoute
+  '/__main/contact': typeof _mainContactRoute
+  '/__main/faq': typeof _mainFaqRoute
+  '/__main/login': typeof _mainLoginRoute
+  '/__main/pricing': typeof _mainPricingRoute
+  '/__main/signup': typeof _mainSignupRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/dashboard/__layout': typeof Dashboard_layoutRoute
+  '/__main/': typeof _mainIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/about'
     | '/contact'
     | '/faq'
@@ -101,9 +123,10 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/signup'
     | '/dashboard'
+    | '/'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/about'
     | '/contact'
     | '/faq'
@@ -111,99 +134,148 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/signup'
     | '/dashboard'
+    | '/'
   id:
     | '__root__'
-    | '/'
-    | '/about'
-    | '/contact'
-    | '/faq'
-    | '/login'
-    | '/pricing'
-    | '/signup'
+    | '/__main'
+    | '/__main/about'
+    | '/__main/contact'
+    | '/__main/faq'
+    | '/__main/login'
+    | '/__main/pricing'
+    | '/__main/signup'
+    | '/dashboard'
+    | '/dashboard/__layout'
+    | '/__main/'
     | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  ContactRoute: typeof ContactRoute
-  FaqRoute: typeof FaqRoute
-  LoginRoute: typeof LoginRoute
-  PricingRoute: typeof PricingRoute
-  SignupRoute: typeof SignupRoute
-  DashboardIndexRoute: typeof DashboardIndexRoute
+  _mainRoute: typeof _mainRouteWithChildren
+  DashboardRoute: typeof DashboardRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupRouteImport
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/pricing': {
-      id: '/pricing'
-      path: '/pricing'
-      fullPath: '/pricing'
-      preLoaderRoute: typeof PricingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/faq': {
-      id: '/faq'
-      path: '/faq'
-      fullPath: '/faq'
-      preLoaderRoute: typeof FaqRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/__main': {
+      id: '/__main'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof _mainRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard/': {
       id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/__main/': {
+      id: '/__main/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof _mainIndexRouteImport
+      parentRoute: typeof _mainRoute
+    }
+    '/dashboard/__layout': {
+      id: '/dashboard/__layout'
       path: '/dashboard'
       fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof Dashboard_layoutRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/__main/signup': {
+      id: '/__main/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof _mainSignupRouteImport
+      parentRoute: typeof _mainRoute
+    }
+    '/__main/pricing': {
+      id: '/__main/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof _mainPricingRouteImport
+      parentRoute: typeof _mainRoute
+    }
+    '/__main/login': {
+      id: '/__main/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof _mainLoginRouteImport
+      parentRoute: typeof _mainRoute
+    }
+    '/__main/faq': {
+      id: '/__main/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof _mainFaqRouteImport
+      parentRoute: typeof _mainRoute
+    }
+    '/__main/contact': {
+      id: '/__main/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof _mainContactRouteImport
+      parentRoute: typeof _mainRoute
+    }
+    '/__main/about': {
+      id: '/__main/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof _mainAboutRouteImport
+      parentRoute: typeof _mainRoute
     }
   }
 }
 
-const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  ContactRoute: ContactRoute,
-  FaqRoute: FaqRoute,
-  LoginRoute: LoginRoute,
-  PricingRoute: PricingRoute,
-  SignupRoute: SignupRoute,
+interface _mainRouteChildren {
+  _mainAboutRoute: typeof _mainAboutRoute
+  _mainContactRoute: typeof _mainContactRoute
+  _mainFaqRoute: typeof _mainFaqRoute
+  _mainLoginRoute: typeof _mainLoginRoute
+  _mainPricingRoute: typeof _mainPricingRoute
+  _mainSignupRoute: typeof _mainSignupRoute
+  _mainIndexRoute: typeof _mainIndexRoute
+}
+
+const _mainRouteChildren: _mainRouteChildren = {
+  _mainAboutRoute: _mainAboutRoute,
+  _mainContactRoute: _mainContactRoute,
+  _mainFaqRoute: _mainFaqRoute,
+  _mainLoginRoute: _mainLoginRoute,
+  _mainPricingRoute: _mainPricingRoute,
+  _mainSignupRoute: _mainSignupRoute,
+  _mainIndexRoute: _mainIndexRoute,
+}
+
+const _mainRouteWithChildren = _mainRoute._addFileChildren(_mainRouteChildren)
+
+interface DashboardRouteChildren {
+  Dashboard_layoutRoute: typeof Dashboard_layoutRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  Dashboard_layoutRoute: Dashboard_layoutRoute,
   DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
+const rootRouteChildren: RootRouteChildren = {
+  _mainRoute: _mainRouteWithChildren,
+  DashboardRoute: DashboardRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

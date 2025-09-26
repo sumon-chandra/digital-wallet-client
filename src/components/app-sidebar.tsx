@@ -16,16 +16,20 @@ import {
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { adminNavigation, agentNavigation, userNavigation } from "@/constants/navigation";
-import type { Role } from "@/interfaces/users";
+import { useLogoutMutation } from "@/redux/api/auth";
+import { useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-	userRole: Role;
+	userRole: string;
 	userName?: string;
 	userEmail?: string;
 	userAvatar?: string;
 }
 
 export function AppSidebar({ userRole, userName = "John Doe", userEmail = "john@example.com", userAvatar, ...props }: AppSidebarProps) {
+	const [logout] = useLogoutMutation();
+	const navigate = useNavigate();
 	const getNavigation = () => {
 		switch (userRole) {
 			case "USER":
@@ -66,6 +70,12 @@ export function AppSidebar({ userRole, userName = "John Doe", userEmail = "john@
 	};
 
 	const navigation = getNavigation();
+
+	const handleLogout = () => {
+		logout(null);
+		toast.success("Logged out successfully!");
+		navigate({ to: "/login" });
+	};
 
 	return (
 		<Sidebar collapsible="icon" {...props}>
@@ -133,7 +143,7 @@ export function AppSidebar({ userRole, userName = "John Doe", userEmail = "john@
 										<span>Profile</span>
 									</a>
 								</DropdownMenuItem>
-								<DropdownMenuItem className="text-destructive">
+								<DropdownMenuItem onClick={handleLogout} className="text-destructive">
 									<LogOut className="mr-2 h-4 w-4" />
 									<span>Log out</span>
 								</DropdownMenuItem>

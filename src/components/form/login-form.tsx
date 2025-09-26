@@ -9,6 +9,7 @@ import FormInput from "./form-input";
 import SubmitButton from "./submit-button";
 import { useLoginMutation } from "@/redux/api/auth";
 import type { CustomBaseQueryError } from "@/redux/base-api";
+import { useNavigate } from "@tanstack/react-router";
 
 const loginFormSchema = z.object({
 	email: z.string().email(),
@@ -17,6 +18,7 @@ const loginFormSchema = z.object({
 
 export default function LoginForm() {
 	const [login, { isLoading, error, isError, data, isSuccess }] = useLoginMutation();
+	const navigate = useNavigate();
 	const errorRes = error as CustomBaseQueryError;
 
 	if (isError) {
@@ -33,8 +35,9 @@ export default function LoginForm() {
 	async function onSubmit(values: z.infer<typeof loginFormSchema>) {
 		try {
 			const response = await login(values);
-			// eslint-disable-next-line no-console
-			console.log({ response });
+			if (response.data?.success) {
+				navigate({ to: "/" });
+			}
 		} catch (error) {
 			console.error("Form submission error", error);
 			toast.error("Failed to submit the form. Please try again.");

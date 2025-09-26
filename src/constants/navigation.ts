@@ -3,27 +3,27 @@ import { LayoutDashboard, CreditCard, ArrowUpDown, History, Users, Wallet, UserP
 export const userNavigation = [
 	{
 		title: "Dashboard",
-		url: "/user",
+		url: "/dashboard",
 		icon: LayoutDashboard,
 	},
 	{
 		title: "Deposit Money",
-		url: "/user/deposit",
+		url: "/dashboard/deposit",
 		icon: CreditCard,
 	},
 	{
 		title: "Withdraw Money",
-		url: "/user/withdraw",
+		url: "/dashboard/withdraw",
 		icon: DollarSign,
 	},
 	{
 		title: "Send Money",
-		url: "/user/send",
+		url: "/dashboard/send",
 		icon: ArrowUpDown,
 	},
 	{
 		title: "Transaction History",
-		url: "/user/transactions",
+		url: "/dashboard/transactions",
 		icon: History,
 	},
 ];
@@ -31,27 +31,27 @@ export const userNavigation = [
 export const agentNavigation = [
 	{
 		title: "Dashboard",
-		url: "/agent",
+		url: "/dashboard",
 		icon: LayoutDashboard,
 	},
 	{
 		title: "Add Money",
-		url: "/agent/add-money",
+		url: "/dashboard/add-money",
 		icon: Wallet,
 	},
 	{
 		title: "Withdraw Money",
-		url: "/agent/withdraw-money",
+		url: "/dashboard/withdraw-money",
 		icon: DollarSign,
 	},
 	{
 		title: "Transactions",
-		url: "/agent/transactions",
+		url: "/dashboard/transactions",
 		icon: History,
 	},
 	{
 		title: "Commission History",
-		url: "/agent/commission",
+		url: "/dashboard/commission",
 		icon: BarChart3,
 	},
 ];
@@ -59,27 +59,27 @@ export const agentNavigation = [
 export const adminNavigation = [
 	{
 		title: "Dashboard",
-		url: "/admin",
+		url: "/dashboard",
 		icon: LayoutDashboard,
 	},
 	{
 		title: "Manage Users",
-		url: "/admin/users",
+		url: "/dashboard/users",
 		icon: Users,
 	},
 	{
 		title: "Manage Agents",
-		url: "/admin/agents",
+		url: "/dashboard/agents",
 		icon: UserPlus,
 	},
 	{
 		title: "All Transactions",
-		url: "/admin/transactions",
+		url: "/dashboard/transactions",
 		icon: History,
 	},
 	{
 		title: "System Settings",
-		url: "/admin/settings",
+		url: "/dashboard/settings",
 		icon: Shield,
 	},
 ];

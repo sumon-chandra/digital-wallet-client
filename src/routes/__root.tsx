@@ -1,4 +1,11 @@
+import type { AuthContext } from "@/hooks/useAuth";
 import RootLayout from "@/layouts/root-layout";
-import { createRootRoute } from "@tanstack/react-router";
+import { createRootRouteWithContext } from "@tanstack/react-router";
 
-export const Route = createRootRoute({ component: RootLayout });
+type RootContext = {
+	auth: AuthContext;
+};
+
+export const Route = createRootRouteWithContext<RootContext>()({
+	component: RootLayout,
+});

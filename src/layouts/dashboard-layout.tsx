@@ -3,20 +3,21 @@ import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/s
 import { AppSidebar } from "@/components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import type { Role } from "@/interfaces/users";
+import { useAuth } from "@/hooks/useAuth";
+import { getDashboardBreadcrumbs } from "@/utils/get-dashboard-breadcrumbs";
 
-interface DashboardLayoutProps {
-	userRole: Role;
-	breadcrumbs?: Array<{ label: string; href?: string }>;
-	userName?: string;
-	userEmail?: string;
-	userAvatar?: string;
-}
+export function DashboardLayout() {
+	const { user } = useAuth();
+	if (!user) {
+		// eslint-disable-next-line no-console
+		console.log("User not found");
+		return null;
+	}
+	const breadcrumbs = getDashboardBreadcrumbs(user.role);
 
-export function DashboardLayout({ userRole, breadcrumbs = [], userName, userEmail, userAvatar }: DashboardLayoutProps) {
 	return (
 		<SidebarProvider>
-			<AppSidebar userRole={userRole} userName={userName} userEmail={userEmail} userAvatar={userAvatar} />
+			<AppSidebar userRole={user.role} userName={user.name} userEmail={user.email} />
 			<SidebarInset>
 				<header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
 					<div className="flex items-center gap-2 px-4">

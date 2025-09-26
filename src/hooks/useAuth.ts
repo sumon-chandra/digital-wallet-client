@@ -6,6 +6,7 @@ interface JWTPayload {
 	userId: string;
 	email: string;
 	role: string;
+	name: string;
 }
 
 export const useAuth = () => {
@@ -13,7 +14,7 @@ export const useAuth = () => {
 
 	if (!token) {
 		return {
-			isLoggedIn: false,
+			isAuthenticated: false,
 			role: null,
 			user: null,
 		};
@@ -23,15 +24,17 @@ export const useAuth = () => {
 
 	if (!decoded) {
 		return {
-			isLoggedIn: false,
+			isAuthenticated: false,
 			role: null,
 			user: null,
 		};
 	}
 
 	return {
-		isLoggedIn: true,
+		isAuthenticated: true,
 		role: decoded.role,
 		user: decoded,
 	};
 };
+
+export type AuthContext = ReturnType<typeof useAuth>;

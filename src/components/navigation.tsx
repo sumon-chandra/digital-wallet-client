@@ -7,7 +7,7 @@ import { navItems } from "@/constants/nav-items";
 
 export function Navigation() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const { isLoggedIn } = useAuth();
+	const { isAuthenticated } = useAuth();
 
 	return (
 		<nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
@@ -32,7 +32,7 @@ export function Navigation() {
 
 					{/* CTA Buttons */}
 					<div className="hidden md:flex items-center space-x-4">
-						{isLoggedIn ? (
+						{isAuthenticated ? (
 							<Button asChild className="bg-secondary/90 hover:bg-secondary">
 								<Link to="/dashboard">Dashboard</Link>
 							</Button>
@@ -73,7 +73,7 @@ export function Navigation() {
 								);
 							})}
 							<div className="flex flex-col space-y-2 pt-4 border-t border-border">
-								{isLoggedIn ? (
+								{isAuthenticated ? (
 									<Button asChild className="bg-secondary/90 hover:bg-secondary">
 										<Link to="..">Dashboard</Link>
 									</Button>

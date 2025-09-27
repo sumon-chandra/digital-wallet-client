@@ -22,6 +22,10 @@ export default function LoginForm() {
 	const errorRes = error as CustomBaseQueryError;
 
 	if (isError) {
+		console.error({
+			isErr: isError,
+			data: errorRes.data,
+		});
 		toast.error(errorRes.data?.message);
 	}
 	if (isSuccess) {

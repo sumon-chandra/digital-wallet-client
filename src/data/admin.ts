@@ -1,0 +1,47 @@
+export const mockData = {
+	totalUsers: 1247,
+	totalAgents: 89,
+	totalTransactions: 15420,
+	totalVolume: 2847650.75,
+	pendingApprovals: 12,
+	systemAlerts: 3,
+	recentUsers: [
+		{ id: 1, name: "John Smith", email: "john@example.com", status: "active", joinDate: "2024-01-15" },
+		{ id: 2, name: "Sarah Johnson", email: "sarah@example.com", status: "blocked", joinDate: "2024-01-14" },
+		{ id: 3, name: "Mike Wilson", email: "mike@example.com", status: "active", joinDate: "2024-01-13" },
+	],
+	recentAgents: [
+		{ id: 1, name: "Agent Smith", email: "agent1@example.com", status: "approved", joinDate: "2024-01-12" },
+		{ id: 2, name: "Agent Brown", email: "agent2@example.com", status: "pending", joinDate: "2024-01-11" },
+		{ id: 3, name: "Agent Davis", email: "agent3@example.com", status: "suspended", joinDate: "2024-01-10" },
+	],
+	recentTransactions: [
+		{
+			id: 1,
+			type: "transfer",
+			amount: 500.0,
+			from: "John Smith",
+			to: "Sarah Johnson",
+			date: "2024-01-15",
+			status: "completed",
+		},
+		{
+			id: 2,
+			type: "deposit",
+			amount: 1000.0,
+			from: "Mike Wilson",
+			to: "Agent Smith",
+			date: "2024-01-15",
+			status: "pending",
+		},
+		{
+			id: 3,
+			type: "withdraw",
+			amount: 250.0,
+			from: "Emma Davis",
+			to: "Agent Brown",
+			date: "2024-01-14",
+			status: "completed",
+		},
+	],
+};

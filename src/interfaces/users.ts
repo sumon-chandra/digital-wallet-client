@@ -14,3 +14,15 @@ export interface IUser {
 	address?: string;
 	createdAt?: Date;
 }
+
+export interface IDemoUser {
+	id: number;
+	name: string;
+	email: string;
+	phone: string;
+	balance: number;
+	status: IsActive; // you can restrict or leave as string
+	joinDate: string; // ISO date format
+	lastActive: string; // timestamp format
+	transactions: number;
+}

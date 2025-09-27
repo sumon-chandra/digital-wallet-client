@@ -5,8 +5,7 @@ import { Users, UserPlus, ArrowUpDown, DollarSign, TrendingUp, AlertTriangle } f
 import { mockData } from "@/data/admin";
 
 export default function DashboardAdminHome() {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const getStatusBadge = (status: string, type: "user" | "agent" | "transaction" = "user") => {
+	const getStatusBadge = (status: string) => {
 		switch (status) {
 			case "active":
 			case "approved":
@@ -160,7 +159,7 @@ export default function DashboardAdminHome() {
 										<p className="text-sm text-muted-foreground">{user.email}</p>
 										<p className="text-xs text-muted-foreground">Joined {user.joinDate}</p>
 									</div>
-									<div className="text-right">{getStatusBadge(user.status, "user")}</div>
+									<div className="text-right">{getStatusBadge(user.status)}</div>
 								</div>
 							))}
 						</div>
@@ -187,7 +186,7 @@ export default function DashboardAdminHome() {
 										<p className="text-sm text-muted-foreground">{agent.email}</p>
 										<p className="text-xs text-muted-foreground">Applied {agent.joinDate}</p>
 									</div>
-									<div className="text-right">{getStatusBadge(agent.status, "agent")}</div>
+									<div className="text-right">{getStatusBadge(agent.status)}</div>
 								</div>
 							))}
 						</div>
@@ -224,7 +223,7 @@ export default function DashboardAdminHome() {
 								</div>
 								<div className="text-right">
 									<p className="font-medium">${transaction.amount.toFixed(2)}</p>
-									{getStatusBadge(transaction.status, "transaction")}
+									{getStatusBadge(transaction.status)}
 								</div>
 							</div>
 						))}

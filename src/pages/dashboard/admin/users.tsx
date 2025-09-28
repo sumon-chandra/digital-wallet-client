@@ -7,16 +7,21 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Filter, Search, MoreHorizontal, UserCheck, UserX, Eye, Download } from "lucide-react";
 import { useState } from "react";
-import type { IDemoUser } from "@/interfaces/users";
-import { mockUsers } from "@/data/admin";
 import { DashboardLayout } from "@/layouts/dashboard-layout";
+import { useGetAllUsersQuery } from "@/redux/api/users";
+import type { IUserResponse } from "@/interfaces/users";
 
 export default function UsersPage() {
-	const [users, setUsers] = useState(mockUsers as IDemoUser[]);
+	// const [users, setUsers] = useState(mockUsers as IUserResponse[]);
+	const { data, error } = useGetAllUsersQuery();
 	const [filterStatus, setFilterStatus] = useState("all");
 	const [searchTerm, setSearchTerm] = useState("");
 	const [currentPage, setCurrentPage] = useState(1);
 	const itemsPerPage = 10;
+
+	const users = data?.data;
+
+	console.error({ error });
 
 	const getStatusBadge = (status: string) => {
 		switch (status) {
@@ -40,39 +45,38 @@ export default function UsersPage() {
 	};
 
 	const handleUserAction = (userId: number, action: string) => {
-		setUsers((prevUsers: IDemoUser[]) =>
-			prevUsers.map((user) => {
-				if (user.id === userId) {
-					switch (action) {
-						case "block":
-							return { ...user, status: "BLOCKED" };
-						case "unblock":
-							return { ...user, status: "ACTIVE" };
-						case "activate":
-							return { ...user, status: "ACTIVE" };
-						default:
-							return user;
-					}
+		users?.map((user) => {
+			if (user.id === userId) {
+				switch (action) {
+					case "block":
+						return { ...user, status: "BLOCKED" };
+					case "unblock":
+						return { ...user, status: "ACTIVE" };
+					case "activate":
+						return { ...user, status: "ACTIVE" };
+					default:
+						return user;
 				}
-				return user;
-			})
-		);
+			}
+			return user;
+		});
 	};
-
+	if (!users) return <div>Loading...</div>;
 	// Filter users
-	const filteredUsers = users.filter((user: IDemoUser) => {
-		const matchesStatus = filterStatus === "all" || user.status === filterStatus;
-		const matchesSearch =
-			searchTerm === "" ||
-			user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			user.phone.includes(searchTerm);
+	const filteredUsers =
+		users.filter((user: IUserResponse) => {
+			const matchesStatus = filterStatus === "all" || user.status === filterStatus;
+			const matchesSearch =
+				searchTerm === "" ||
+				user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+				user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+				user.phone.includes(searchTerm);
 
-		return matchesStatus && matchesSearch;
-	});
+			return matchesStatus && matchesSearch;
+		}) || [];
 
 	// Pagination
-	const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+	const totalPages = Math.ceil(filteredUsers?.length / itemsPerPage);
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const paginatedUsers = filteredUsers.slice(startIndex, startIndex + itemsPerPage);
 
@@ -86,7 +90,7 @@ export default function UsersPage() {
 							<CardTitle className="text-sm font-medium">Total Users</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<div className="text-2xl font-bold">{users.length}</div>
+							<div className="text-2xl font-bold">{users?.length}</div>
 						</CardContent>
 					</Card>
 					<Card>
@@ -94,7 +98,7 @@ export default function UsersPage() {
 							<CardTitle className="text-sm font-medium">Active Users</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<div className="text-2xl font-bold text-green-600">{users.filter((u: IDemoUser) => u.status === "ACTIVE").length}</div>
+							<div className="text-2xl font-bold text-green-600">{users?.filter((u: IUserResponse) => u.status === "ACTIVE").length}</div>
 						</CardContent>
 					</Card>
 					<Card>
@@ -102,7 +106,7 @@ export default function UsersPage() {
 							<CardTitle className="text-sm font-medium">Blocked Users</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<div className="text-2xl font-bold text-red-600">{users.filter((u: IDemoUser) => u.status === "BLOCKED").length}</div>
+							<div className="text-2xl font-bold text-red-600">{users?.filter((u: IUserResponse) => u.status === "BLOCKED").length}</div>
 						</CardContent>
 					</Card>
 					<Card>
@@ -110,7 +114,7 @@ export default function UsersPage() {
 							<CardTitle className="text-sm font-medium">Total Balance</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<div className="text-2xl font-bold">${users.reduce((sum: number, u: IDemoUser) => sum + u.balance, 0).toFixed(2)}</div>
+							<div className="text-2xl font-bold">${users?.reduce((sum: number, u: IUserResponse) => sum + u.balance, 0).toFixed(2)}</div>
 						</CardContent>
 					</Card>
 				</div>
@@ -162,7 +166,7 @@ export default function UsersPage() {
 					</CardHeader>
 					<CardContent>
 						<div className="space-y-4">
-							{paginatedUsers.map((user: IDemoUser) => (
+							{paginatedUsers.map((user: IUserResponse) => (
 								<div key={user.id} className="flex items-center justify-between p-4 border rounded-lg">
 									<div className="flex items-center gap-4">
 										<Avatar>

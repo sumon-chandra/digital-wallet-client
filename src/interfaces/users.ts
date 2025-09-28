@@ -15,14 +15,14 @@ export interface IUser {
 	createdAt?: Date;
 }
 
-export interface IDemoUser {
+export interface IUserResponse {
 	id: number;
 	name: string;
 	email: string;
 	phone: string;
 	balance: number;
-	status: IsActive; // you can restrict or leave as string
-	joinDate: string; // ISO date format
-	lastActive: string; // timestamp format
+	status: IsActive;
+	joinDate: string;
+	lastActive: string;
 	transactions: number;
 }

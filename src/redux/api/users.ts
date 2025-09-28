@@ -1,4 +1,4 @@
-import type { IUser } from "@/interfaces/users";
+import type { IUser, IUserResponse } from "@/interfaces/users";
 import { baseApi } from "../base-api";
 import type { SuccessResponse } from "@/interfaces/api-response";
 
@@ -21,7 +21,7 @@ import type { SuccessResponse } from "@/interfaces/api-response";
 
 export const usersApi = baseApi.injectEndpoints({
 	endpoints: (builder) => ({
-		getAllUsers: builder.query({
+		getAllUsers: builder.query<SuccessResponse<IUserResponse>, void>({
 			query: () => ({
 				url: "users",
 				method: "GET",
